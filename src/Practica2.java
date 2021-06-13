@@ -20,7 +20,7 @@ public class Practica2
     static void prestarPeliculas()
     {
         System.out.println("seleccione ingresando el id de la pelicula");
-        System.out.println("orden: id, nombre, anio, categoria");
+        System.out.println("orden: id, nombre");
         // mostrar peliculas disponibles
         int i = 0;
         while (i < idPeliculas.length)
@@ -127,7 +127,7 @@ public class Practica2
         boolean halladoI1 = false;
         while (i < idPeliculaPrestamo.length && !halladoI1)
         {
-            if (respuestaIDPelicula == idPeliculaPrestamo[i])
+            if (idPeliculaPrestamo[i] == respuestaIDPelicula)
             {
                 halladoI1 = true;
                 int j = 0;
@@ -158,7 +158,6 @@ public class Practica2
         }
         menu1();
     }
-
 
     static void mostrarPeliculas()
     {
@@ -263,6 +262,16 @@ public class Practica2
         return array2;
     }
 
+    static void mostrarClientes()
+    {
+        int i = 0;
+        while (i < idClientes.length)
+        {
+            System.out.println(idClientes[i] + ", " + nombreClientes[i] + ", " + telefonoClientes[i]);
+            i = i + 1;
+        }
+    }
+
     static void menu1()
     {
         System.out.println("MEMORABILIA");
@@ -272,7 +281,7 @@ public class Practica2
         System.out.println("[4] ingresar una pelicula");
         System.out.println("[5]* ordenar peliculas");
         System.out.println("[6] ingresar nuevo cliente");
-        System.out.println("[7]* listar todos los clientes");
+        System.out.println("[7] listar todos los clientes");
         System.out.println("[8]* resportes");
         Scanner scanner1 = new Scanner(System.in);
         int seleccion = scanner1.nextInt();
@@ -296,6 +305,7 @@ public class Practica2
                 ingresarCliente();
                 break;
             case 7:
+                mostrarClientes();
                 break;
             case 8:
                 break;
