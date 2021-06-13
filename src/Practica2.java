@@ -7,6 +7,7 @@ public class Practica2
     static String[] nombrePeliculas = new String[0];
     static int[] anioPeliculas = new int[0];
     static String[] categoriaPeliculas = new String[0];
+    static int[] incidenciaPrestamoPeliculas = new int[0];
 
     static int[] idClientes = new int[0];
     static boolean[] tienePeliculaClientes = new boolean[0];
@@ -66,6 +67,7 @@ public class Practica2
                             disponiblePeliculas[i] = false;
                             tienePeliculaClientes[j] = true;
                             agregarPrestamo(cliente, pelicula, dias);
+                            incidenciaPrestamoPeliculas[i] = incidenciaPrestamoPeliculas[i] + 1;
                             System.out.println("[?] prestamo exitoso");
                         }
                         j = j + 1;
@@ -232,9 +234,8 @@ public class Practica2
         anioPeliculas = agregarElementoInt(anioPeliculas, anio);
         categoriaPeliculas = agregarElementoString(categoriaPeliculas, categoria);
         disponiblePeliculas = agregarElementoBoolean(disponiblePeliculas, true);
+        incidenciaPrestamoPeliculas = agregarElementoInt(incidenciaPrestamoPeliculas, 0);
     }
-
-
 
     static String[] agregarElementoString(String[] array1, String elemento1)
     {
@@ -292,6 +293,46 @@ public class Practica2
         menu1();
     }
 
+    static void reportes()
+    {
+        System.out.println("cantidad de peliculas por categoria");
+        System.out.println("orden: categoria, incidencia");
+        int i = 0;
+        while (i < categoriaPeliculas.length)
+        {
+            System.out.println(categoriaPeliculas[i] + ", " + incidenciasCategoria[i]);
+            i = i + 1;
+        }
+
+        System.out.println("peliculas por categoria");
+        System.out.println("orden: categoria: pelicula1, pelicula2, ...");
+        i = 0;
+        while (i < nombresCategoria.length)
+        {
+            System.out.println(nombresCategoria[i] + ": ");
+            int j = 0;
+            while (j < categoriaPeliculas.length)
+            {
+                if (nombresCategoria[i].equals(categoriaPeliculas[j]))
+                {
+                    System.out.print(nombrePeliculas[j] + ", ");
+                }
+                j = j + 1;
+            }
+            System.out.println();
+            i = i + 1;
+        }
+
+        System.out.println("incidencia de prestamo de peliculas");
+        System.out.println("orden: idPelicula, nombrePelicula: incidenciaPrestamo");
+        i = 0;
+        while (i < idPeliculas.length)
+        {
+            System.out.println(idPeliculas[i] + ", " + nombrePeliculas[i] + ": " + incidenciaPrestamoPeliculas[i]);
+            i = i + 1;
+        }
+    }
+
     static void menu1()
     {
         System.out.println("MEMORABILIA");
@@ -336,9 +377,8 @@ public class Practica2
         }
     }
 
-
-
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         menu1();
     }
 }
