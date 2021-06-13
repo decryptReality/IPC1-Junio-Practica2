@@ -17,60 +17,10 @@ public class Practica2
     static int[] idPeliculaPrestamo = new int[0];
     static int[] cantidadDiasPrestamo = new int[0];
 
-
-    static void devolverPelicula()
-    {
-        System.out.println("seleccione ingresando el id de una pelicula");
-        System.out.println("orden: idPelicula, nombrePelicula, nombreCliente");
-        // mostrar peliculas prestadas
-        int i = 0;
-        boolean halladoJ = false;
-        while (i < idPeliculaPrestamo.length)
-        {
-            int j = 0;
-            while (j < idPeliculas.length && !halladoJ)
-            {
-                if (idPeliculaPrestamo[i] == idPeliculas[j])
-                {
-                    halladoJ = true;
-
-                    int k = 0;
-                    boolean halladoK = false;
-                    while (k < idClientes.length && !halladoK)
-                    {
-                        if (idClientePrestamo[i] == idClientes[k])
-                        {
-                            halladoK = true;
-                            System.out.println(idPeliculas[j] + ", " + nombrePeliculas[j] + ", " + nombreClientes[k]);
-                        }
-                        k = k + 1;
-                    }
-                }
-                j = j + 1;
-            }
-            i = i + 1;
-        }
-
-        Scanner scanner1 = new Scanner(System.in);
-        int respuestaIDPelicula = scanner1.nextInt();
-
-        i = 0;
-        halladoJ = false;
-        while (i < idPeliculas.length && !halladoJ)
-        {
-            if (respuestaIDPelicula == idPeliculas[i])
-            {
-                halladoJ = true;
-
-                disponiblePeliculas[i] = true;
-            }
-            i = i + 1;
-        }
-
-    }
-
     static void prestarPeliculas()
     {
+        System.out.println("seleccione ingresando el id de la pelicula");
+        System.out.println("orden: id, nombre, anio, categoria");
         // mostrar peliculas disponibles
         int i = 0;
         while (i < idPeliculas.length)
@@ -79,6 +29,7 @@ public class Practica2
             {
                 System.out.println(idPeliculas[i] + ", " + nombrePeliculas[i]);
             }
+            i = i + 1;
         }
 
         Scanner scanner1 = new Scanner(System.in);
@@ -117,7 +68,9 @@ public class Practica2
                     }
                 }
             }
+            i = i + 1;
         }
+        menu1();
     }
 
     static void agregarPrestamo(int cliente, int pelicula, int dias)
@@ -127,17 +80,95 @@ public class Practica2
         cantidadDiasPrestamo = agregarElementoInt(cantidadDiasPrestamo, dias);
     }
 
-    static void devolverPeliculas()
+    static void devolverPelicula()
     {
+        System.out.println("seleccione ingresando el id de una pelicula");
+        System.out.println("orden: idPelicula, nombrePelicula, nombreCliente");
+        // mostrar peliculas prestadas
+        int i = 0;
+        boolean halladoJ = false;
+        while (i < idPeliculaPrestamo.length)
+        {
+            int j = 0;
+            while (j < idPeliculas.length && !halladoJ)
+            {
+                if (idPeliculaPrestamo[i] == idPeliculas[j])
+                {
+                    halladoJ = true;
 
+                    int k = 0;
+                    boolean halladoK = false;
+                    while (k < idClientes.length && !halladoK)
+                    {
+                        if (idClientePrestamo[i] == idClientes[k])
+                        {
+                            halladoK = true;
+                            System.out.println(idPeliculas[j] + ", " + nombrePeliculas[j] + ", " + nombreClientes[k]);
+                        }
+                        k = k + 1;
+                    }
+                }
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+
+        Scanner scanner1 = new Scanner(System.in);
+        int respuestaIDPelicula = scanner1.nextInt();
+
+        // verificar si el id en respuesta pertenece a alguna opcion de los enlistados
+        // si asi es, con el indice del prestamo verificar cada id de ese prestamo
+        // para poder cambiear el estado en ese cliente y pelicula
+
+        // indice de presatamo: para obtener id de cliente y pelicula
+        // cada id se debe buscar en clientes y en peliculas
+        // con indice de clientes y peliculas: cambiar estados en peliculas y clientes
+        i = 0;
+        boolean halladoI1 = false;
+        while (i < idPeliculaPrestamo.length && !halladoI1)
+        {
+            if (respuestaIDPelicula == idPeliculaPrestamo[i])
+            {
+                halladoI1 = true;
+                int j = 0;
+                boolean halladoJ2 = false;
+                while (j < idClientes.length)
+                {
+                    if (idClientePrestamo[i] == idClientes[j] && !halladoJ2)
+                    {
+                        halladoJ2 = true;
+                        int k = 0;
+                        boolean halladoK2 = false;
+                        while (k < idPeliculas.length)
+                        {
+                            if (idPeliculaPrestamo[i] == idPeliculas[k] && !halladoK2)
+                            {
+                                halladoK2 = true;
+                                disponiblePeliculas[k] = true;
+                                tienePeliculaClientes[j] = false;
+                                System.out.println("[?] devolucion exitosa");
+                            }
+                            k = k + 1;
+                        }
+                    }
+                    j = j + 1;
+                }
+            }
+            i = i + 1;
+        }
+        menu1();
     }
+
+
     static void mostrarPeliculas()
     {
         int i = 0;
         while (i < idPeliculas.length)
         {
-            System.out.println(idPeliculas[i] + nombrePeliculas[i] + anioPeliculas[i] + categoriaPeliculas[i]);
+            System.out.println(idPeliculas[i] + ", " + nombrePeliculas[i] + ", " + anioPeliculas[i] + ", " + categoriaPeliculas[i]);
+            i = i + 1;
         }
+        menu1();
     }
 
     static void ingresarCliente()
@@ -151,6 +182,7 @@ public class Practica2
         int telefono = scanner1.nextInt();
         agregarCliente(id, nombre, telefono);
         System.out.println("[?] cliente agregado con exito");
+        menu1();
     }
 
     static void agregarCliente(int id, String nombre, int telefono)
@@ -174,6 +206,7 @@ public class Practica2
         String categoria = scanner1.next();
         agregarPelicula(id, nombre, anio, categoria);
         System.out.println("[?] pelicula agregada con exito");
+        menu1();
     }
 
     static void agregarPelicula(int id, String nombre, int anio, String categoria)
@@ -237,9 +270,43 @@ public class Practica2
         System.out.println("[2] devolucion de peliculas");
         System.out.println("[3] listar todas las peliculas");
         System.out.println("[4] ingresar una pelicula");
-        System.out.println("[5] ordenar peliculas");
+        System.out.println("[5]* ordenar peliculas");
         System.out.println("[6] ingresar nuevo cliente");
-        System.out.println("[7] listar todos los clientes");
-        System.out.println("[8] resportes");
+        System.out.println("[7]* listar todos los clientes");
+        System.out.println("[8]* resportes");
+        Scanner scanner1 = new Scanner(System.in);
+        int seleccion = scanner1.nextInt();
+        switch (seleccion)
+        {
+            case 1:
+                prestarPeliculas();
+                break;
+            case 2:
+                devolverPelicula();
+                break;
+            case 3:
+                mostrarPeliculas();
+                break;
+            case 4:
+                ingresarPelicula();
+                break;
+            case 5:
+                break;
+            case 6:
+                ingresarCliente();
+                break;
+            case 7:
+                break;
+            case 8:
+                break;
+            case 9:
+                break;
+            case 10:
+                break;
+        }
+    }
+
+    public static void main(String[] args) {
+        menu1();
     }
 }
