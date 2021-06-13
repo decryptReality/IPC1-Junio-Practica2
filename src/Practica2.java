@@ -85,10 +85,14 @@ public class Practica2
         System.out.println("seleccione ingresando el id de una pelicula");
         System.out.println("orden: idPelicula, nombrePelicula, nombreCliente");
         // mostrar peliculas prestadas
+        int[] indicePeliculaPrestamo = new int[idPeliculaPrestamo.length];
+        int[] indiceClientePrestamo = new int[idClientePrestamo.length];
+
         int i = 0;
-        boolean halladoJ = false;
+
         while (i < idPeliculaPrestamo.length)
         {
+            boolean halladoJ = false;
             int j = 0;
             while (j < idPeliculas.length && !halladoJ)
             {
@@ -103,7 +107,14 @@ public class Practica2
                         if (idClientePrestamo[i] == idClientes[k])
                         {
                             halladoK = true;
-                            System.out.println(idPeliculas[j] + ", " + nombrePeliculas[j] + ", " + nombreClientes[k]);
+
+                            indicePeliculaPrestamo[i] = j;
+                            indiceClientePrestamo[i] = k;
+
+                            if (!disponiblePeliculas[j] && tienePeliculaClientes[k])
+                            {
+                                System.out.println(idPeliculas[j] + ", " + nombrePeliculas[j] + ", " + nombreClientes[k]);
+                            }
                         }
                         k = k + 1;
                     }
@@ -113,9 +124,6 @@ public class Practica2
             i = i + 1;
         }
 
-        Scanner scanner1 = new Scanner(System.in);
-        int respuestaIDPelicula = scanner1.nextInt();
-
         // verificar si el id en respuesta pertenece a alguna opcion de los enlistados
         // si asi es, con el indice del prestamo verificar cada id de ese prestamo
         // para poder cambiear el estado en ese cliente y pelicula
@@ -123,6 +131,10 @@ public class Practica2
         // indice de presatamo: para obtener id de cliente y pelicula
         // cada id se debe buscar en clientes y en peliculas
         // con indice de clientes y peliculas: cambiar estados en peliculas y clientes
+
+        Scanner scanner1 = new Scanner(System.in);
+        int respuestaIDPelicula = scanner1.nextInt();
+
         i = 0;
         boolean halladoI1 = false;
         while (i < idPeliculaPrestamo.length && !halladoI1)
@@ -130,29 +142,9 @@ public class Practica2
             if (idPeliculaPrestamo[i] == respuestaIDPelicula)
             {
                 halladoI1 = true;
-                int j = 0;
-                boolean halladoJ2 = false;
-                while (j < idClientes.length)
-                {
-                    if (idClientePrestamo[i] == idClientes[j] && !halladoJ2)
-                    {
-                        halladoJ2 = true;
-                        int k = 0;
-                        boolean halladoK2 = false;
-                        while (k < idPeliculas.length)
-                        {
-                            if (idPeliculaPrestamo[i] == idPeliculas[k] && !halladoK2)
-                            {
-                                halladoK2 = true;
-                                disponiblePeliculas[k] = true;
-                                tienePeliculaClientes[j] = false;
-                                System.out.println("[?] devolucion exitosa");
-                            }
-                            k = k + 1;
-                        }
-                    }
-                    j = j + 1;
-                }
+                disponiblePeliculas[indicePeliculaPrestamo[i]] = true;
+                tienePeliculaClientes[indiceClientePrestamo[i]] = false;
+                System.out.println("[?] devolucion exitosa");
             }
             i = i + 1;
         }
@@ -270,6 +262,7 @@ public class Practica2
             System.out.println(idClientes[i] + ", " + nombreClientes[i] + ", " + telefonoClientes[i]);
             i = i + 1;
         }
+        menu1();
     }
 
     static void menu1()
@@ -277,11 +270,11 @@ public class Practica2
         System.out.println("MEMORABILIA");
         System.out.println("[1] prestamo de peliculas");
         System.out.println("[2] devolucion de peliculas");
-        System.out.println("[3] listar todas las peliculas");
-        System.out.println("[4] ingresar una pelicula");
-        System.out.println("[5]* ordenar peliculas");
-        System.out.println("[6] ingresar nuevo cliente");
-        System.out.println("[7] listar todos los clientes");
+        System.out.println("[3] ingresar una pelicula");
+        System.out.println("[4] ingresar nuevo cliente");
+        System.out.println("[5] listar todas las peliculas");
+        System.out.println("[6] listar todos los clientes");
+        System.out.println("[7]* ordenar peliculas");
         System.out.println("[8]* resportes");
         Scanner scanner1 = new Scanner(System.in);
         int seleccion = scanner1.nextInt();
@@ -294,18 +287,18 @@ public class Practica2
                 devolverPelicula();
                 break;
             case 3:
-                mostrarPeliculas();
-                break;
-            case 4:
                 ingresarPelicula();
                 break;
-            case 5:
-                break;
-            case 6:
+            case 4:
                 ingresarCliente();
                 break;
-            case 7:
+            case 5:
+                mostrarPeliculas();
+                break;
+            case 6:
                 mostrarClientes();
+                break;
+            case 7:
                 break;
             case 8:
                 break;
