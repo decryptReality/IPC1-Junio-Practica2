@@ -16,6 +16,10 @@ public class Practica2
     static int[] idClientePrestamo = new int[0];
     static int[] idPeliculaPrestamo = new int[0];
     static int[] cantidadDiasPrestamo = new int[0];
+    static boolean[] devolucionPrestamo = new boolean[0];
+
+    static String[] nombresCategoria = new String[0];
+    static int[] incidenciasCategoria = new int[0];
 
     static void prestarPeliculas()
     {
@@ -78,6 +82,7 @@ public class Practica2
         idClientePrestamo = agregarElementoInt(idClientePrestamo, cliente);
         idPeliculaPrestamo = agregarElementoInt(idPeliculaPrestamo, pelicula);
         cantidadDiasPrestamo = agregarElementoInt(cantidadDiasPrestamo, dias);
+        devolucionPrestamo = agregarElementoBoolean(devolucionPrestamo, false);
     }
 
     static void devolverPelicula()
@@ -111,7 +116,7 @@ public class Practica2
                             indicePeliculaPrestamo[i] = j;
                             indiceClientePrestamo[i] = k;
 
-                            if (!disponiblePeliculas[j] && tienePeliculaClientes[k])
+                            if (!disponiblePeliculas[j] && tienePeliculaClientes[k] && !devolucionPrestamo[i])
                             {
                                 System.out.println(idPeliculas[j] + ", " + nombrePeliculas[j] + ", " + nombreClientes[k]);
                             }
@@ -142,6 +147,7 @@ public class Practica2
             if (idPeliculaPrestamo[i] == respuestaIDPelicula)
             {
                 halladoI1 = true;
+                devolucionPrestamo[i] = true;
                 disponiblePeliculas[indicePeliculaPrestamo[i]] = true;
                 tienePeliculaClientes[indiceClientePrestamo[i]] = false;
                 System.out.println("[?] devolucion exitosa");
@@ -197,6 +203,25 @@ public class Practica2
         String categoria = scanner1.next();
         agregarPelicula(id, nombre, anio, categoria);
         System.out.println("[?] pelicula agregada con exito");
+
+        // si despues de terminado el ciclo no se encuentra categoria
+        // crear nueva categoria
+        int i = 0;
+        boolean hallado = false;
+        while (i < nombresCategoria.length && !hallado)
+        {
+            if (categoria.toLowerCase().equals(nombresCategoria[i]))
+            {
+                hallado = true;
+                incidenciasCategoria[i] = incidenciasCategoria[i] + 1;
+            }
+            i = i + 1;
+        }
+        if (!hallado)
+        {
+            nombresCategoria = agregarElementoString(nombresCategoria, categoria.toLowerCase());
+            incidenciasCategoria = agregarElementoInt(incidenciasCategoria, 1);
+        }
         menu1();
     }
 
@@ -208,6 +233,8 @@ public class Practica2
         categoriaPeliculas = agregarElementoString(categoriaPeliculas, categoria);
         disponiblePeliculas = agregarElementoBoolean(disponiblePeliculas, true);
     }
+
+
 
     static String[] agregarElementoString(String[] array1, String elemento1)
     {
@@ -308,6 +335,8 @@ public class Practica2
                 break;
         }
     }
+
+
 
     public static void main(String[] args) {
         menu1();
