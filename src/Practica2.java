@@ -17,6 +17,120 @@ public class Practica2
     static int[] idPeliculaPrestamo = new int[0];
     static int[] cantidadDiasPrestamo = new int[0];
 
+
+    static void devolverPelicula()
+    {
+        System.out.println("seleccione ingresando el id de una pelicula");
+        System.out.println("orden: idPelicula, nombrePelicula, nombreCliente");
+        // mostrar peliculas prestadas
+        int i = 0;
+        boolean halladoJ = false;
+        while (i < idPeliculaPrestamo.length)
+        {
+            int j = 0;
+            while (j < idPeliculas.length && !halladoJ)
+            {
+                if (idPeliculaPrestamo[i] == idPeliculas[j])
+                {
+                    halladoJ = true;
+
+                    int k = 0;
+                    boolean halladoK = false;
+                    while (k < idClientes.length && !halladoK)
+                    {
+                        if (idClientePrestamo[i] == idClientes[k])
+                        {
+                            halladoK = true;
+                            System.out.println(idPeliculas[j] + ", " + nombrePeliculas[j] + ", " + nombreClientes[k]);
+                        }
+                        k = k + 1;
+                    }
+                }
+                j = j + 1;
+            }
+            i = i + 1;
+        }
+
+        Scanner scanner1 = new Scanner(System.in);
+        int respuestaIDPelicula = scanner1.nextInt();
+
+        i = 0;
+        halladoJ = false;
+        while (i < idPeliculas.length && !halladoJ)
+        {
+            if (respuestaIDPelicula == idPeliculas[i])
+            {
+                halladoJ = true;
+
+                disponiblePeliculas[i] = true;
+            }
+            i = i + 1;
+        }
+
+    }
+
+    static void prestarPeliculas()
+    {
+        // mostrar peliculas disponibles
+        int i = 0;
+        while (i < idPeliculas.length)
+        {
+            if (disponiblePeliculas[i])
+            {
+                System.out.println(idPeliculas[i] + ", " + nombrePeliculas[i]);
+            }
+        }
+
+        Scanner scanner1 = new Scanner(System.in);
+        System.out.println("seleccione el id de una pelicula");
+        int pelicula = scanner1.nextInt();
+
+        i = 0;
+        boolean seleccionado = false;
+        while (i < idPeliculas.length && !seleccionado)
+        {
+            if (pelicula == idPeliculas[i])
+            {
+                seleccionado = true;
+                System.out.println("[S/N] guardar en tabla de prestamo?");
+                String respuesta2 = scanner1.next();
+                if (respuesta2.equals("S"))
+                {
+                    System.out.println("ingrese id de cliente");
+                    int cliente = scanner1.nextInt();
+                    System.out.println("ingrese la cantidad de dias del prestamo");
+                    int dias = scanner1.nextInt();
+
+                    int j = 0;
+                    boolean hallado = false;
+                    while (j < idClientes.length && !hallado)
+                    {
+                        if (cliente == idClientes[j])
+                        {
+                            hallado = true;
+                            disponiblePeliculas[i] = false;
+                            tienePeliculaClientes[j] = true;
+                            agregarPrestamo(cliente, pelicula, dias);
+                            System.out.println("[?] prestamo exitoso");
+                        }
+                        j = j + 1;
+                    }
+                }
+            }
+        }
+    }
+
+    static void agregarPrestamo(int cliente, int pelicula, int dias)
+    {
+        idClientePrestamo = agregarElementoInt(idClientePrestamo, cliente);
+        idPeliculaPrestamo = agregarElementoInt(idPeliculaPrestamo, pelicula);
+        cantidadDiasPrestamo = agregarElementoInt(cantidadDiasPrestamo, dias);
+    }
+
+    static void devolverPeliculas()
+    {
+
+    }
     static void mostrarPeliculas()
     {
         int i = 0;
