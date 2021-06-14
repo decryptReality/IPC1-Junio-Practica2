@@ -3,6 +3,8 @@ import java.util.Scanner;
 
 public class Practica2
 {
+    // el grupo con la notacion _Peliculas manejan el mismo indice para refererirse a
+    // las propiedades de algun elementento de ellos
     static int[] id_Peliculas = new int[0];
     static boolean[] disponibilidad_Peliculas = new boolean[0];
     static String[] nombre_Peliculas = new String[0];
@@ -10,16 +12,19 @@ public class Practica2
     static String[] categoria_Peliculas = new String[0];
     static int[] incidencia_prestamo_Peliculas = new int[0];
 
+    // sucede lo mismo con la notacion _Clientes
     static int[] id_Clientes = new int[0];
     static boolean[] prestamo_Clientes = new boolean[0];
     static String[] nombre_Clientes = new String[0];
     static int[] telefono_Clientes = new int[0];
 
+    // sucede lo mismo con la notacion _Prestamos
     static int[] id_cliente_Prestamos = new int[0];
     static int[] id_pelicula_Prestamos = new int[0];
     static int[] dias_Prestamos = new int[0];
     static boolean[] devolucion_Prestamos = new boolean[0];
 
+    // sucede lo mismo con la notacion _Categorias
     static String[] nombre_Categorias = new String[0];
     static int[] incidencia_Categorias = new int[0];
 
@@ -192,6 +197,7 @@ public class Practica2
         prestamo_Clientes = agregarElementoBoolean(prestamo_Clientes, false);
     }
 
+    // introducir peliculas manualmente
     static void ingresarPelicula()
     {
         Scanner scanner1 = new Scanner(System.in);
@@ -231,15 +237,14 @@ public class Practica2
         menu1();
     }
 
+    // metodo para ingresar peliculas sin necesidad de introducirlas manuakmente
     static void ingresarPeliculaAUTO(int id, String nombre, int anio, String categoria)
     {
         String categoria2 = categoria.toLowerCase();
         agregarPelicula(id, nombre, anio, categoria2);
-        System.out.println("[?] pelicula agregada con exito");
 
         // si despues de terminado el ciclo no se encuentra categoria
         // crear nueva categoria
-
         int i = 0;
         while (i < nombre_Categorias.length)
         {
@@ -271,6 +276,7 @@ public class Practica2
         incidencia_prestamo_Peliculas = agregarElementoInt(incidencia_prestamo_Peliculas, 0);
     }
 
+    // metodo para agregar un nuevo elemento tipo string a un array
     static String[] agregarElementoString(String[] array1, String elemento1)
     {
         String[] array2 = new String[array1.length + 1];
@@ -286,6 +292,7 @@ public class Practica2
         return array2;
     }
 
+    // metodo para agregar un nuevo elemento tipo int a un array
     static int[] agregarElementoInt(int[] array1, int elemento1)
     {
         int[] array2 = new int[array1.length + 1];
@@ -301,6 +308,7 @@ public class Practica2
         return array2;
     }
 
+    // metodo para agregar un nuevo elemento tipo boolean a un array
     static boolean[] agregarElementoBoolean(boolean[] array1, boolean elemento1)
     {
         boolean[] array2 = new boolean[array1.length + 1];
@@ -329,6 +337,7 @@ public class Practica2
 
     static void reportes()
     {
+        // reporte 1
         System.out.println("[+] cantidad de peliculas por categoria");
         System.out.println("    orden: categoria, incidencia");
         int i = 0;
@@ -338,6 +347,7 @@ public class Practica2
             i = i + 1;
         }
 
+        // reporte 2
         System.out.println("[+] peliculas por categoria");
         System.out.println("    orden: categoria: pelicula1, pelicula2, ...");
         i = 0;
@@ -357,6 +367,7 @@ public class Practica2
             i = i + 1;
         }
 
+        // reporte 3
         System.out.println("[+] incidencia de prestamo de peliculas");
         System.out.println("    orden: idPelicula, nombrePelicula: incidenciaPrestamo");
         i = 0;
@@ -366,6 +377,7 @@ public class Practica2
             i = i + 1;
         }
 
+        // reporte 4
         int mayor = incidencia_prestamo_Peliculas[0];
         System.out.println("[+] pelicula mayormente prestada");
         i = 0;
@@ -381,6 +393,7 @@ public class Practica2
         }
         System.out.println("    " + id_Peliculas[mayorI] + ", " + nombre_Peliculas[mayorI] + ": " + incidencia_prestamo_Peliculas[mayorI]);
 
+        // reporte 5
         int menor = incidencia_prestamo_Peliculas[0];
         System.out.println("[+] pelicula menormente prestada");
         i = 0;
@@ -409,9 +422,9 @@ public class Practica2
             {
                 if(nombresOrdenados[i].compareTo(nombresOrdenados[j]) > 0)
                 {
-                    String temp = nombresOrdenados[i];
+                    String temporal = nombresOrdenados[i];
                     nombresOrdenados[i] = nombresOrdenados[j];
-                    nombresOrdenados[j] = temp;
+                    nombresOrdenados[j] = temporal;
                 }
             }
         }
@@ -465,7 +478,9 @@ public class Practica2
 
     public static void main(String[] args)
     {
-        // agregamos algunos clientes y peliculas
+        // agregamos algunos clientes y peliculas al programa
+        // para no ingresarlos manualmente en el programa
+        // aunque si se tiene esa opcion en el programa
         Random random1 = new Random();
         int i = 9; // alternativa2: int i = 1;
         while (i > 0) // alternativa2: while (i < 10)
@@ -479,6 +494,8 @@ public class Practica2
             ingresarPeliculaAUTO(id, "pelicula" + id, num3, categoria);
             i = i - 1;
         }
+
+        // iniciamos la ejecucion del programa
         menu1();
     }
 }
