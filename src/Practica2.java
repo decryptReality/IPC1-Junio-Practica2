@@ -202,33 +202,9 @@ public class Practica2
         System.out.println("ingrese el anio de la pelicula");
         int anio = scanner1.nextInt();
         System.out.println("ingrese la categoria de la pelicula");
-        String categoria = scanner1.next();
-        agregarPelicula(id, nombre, anio, categoria.toLowerCase());
-        System.out.println("[?] pelicula agregada con exito");
-
-        // si despues de terminado el ciclo no se encuentra categoria
-        // crear nueva categoria
-        int i = 0;
-        boolean hallado = false;
-        while (i < nombre_Categorias.length && !hallado)
-        {
-            if (categoria.toLowerCase().equals(nombre_Categorias[i]))
-            {
-                hallado = true;
-                incidencia_Categorias[i] = incidencia_Categorias[i] + 1;
-            }
-            i = i + 1;
-        }
-        if (!hallado)
-        {
-            nombre_Categorias = agregarElementoString(nombre_Categorias, categoria.toLowerCase());
-            incidencia_Categorias = agregarElementoInt(incidencia_Categorias, 1);
-        }
-        menu1();
-    }
-    static void ingresarPeliculaAUTO(int id, String nombre, int anio, String categoria)
-    {
-        agregarPelicula(id, nombre, anio, categoria.toLowerCase());
+        String categoria1 = scanner1.next();
+        String categoria2 = categoria1.toLowerCase();
+        agregarPelicula(id, nombre, anio, categoria2);
         System.out.println("[?] pelicula agregada con exito");
 
         // si despues de terminado el ciclo no se encuentra categoria
@@ -236,19 +212,50 @@ public class Practica2
         int i = 0;
         while (i < nombre_Categorias.length)
         {
-            if (categoria.toLowerCase().equals(nombre_Categorias[i]))
+            if (categoria2.equals(nombre_Categorias[i]))
             {
                 incidencia_Categorias[i] = incidencia_Categorias[i] + 1;
-                i = nombre_Categorias.length;
+                i = nombre_Categorias.length + 1;
             }
             else
             {
                 i = i + 1;
             }
         }
-        if (i != nombre_Categorias.length)
+        if (i != nombre_Categorias.length + 1)
         {
-            nombre_Categorias = agregarElementoString(nombre_Categorias, categoria.toLowerCase());
+            nombre_Categorias = agregarElementoString(nombre_Categorias, categoria2);
+            incidencia_Categorias = agregarElementoInt(incidencia_Categorias, 1);
+        }
+
+        menu1();
+    }
+
+    static void ingresarPeliculaAUTO(int id, String nombre, int anio, String categoria)
+    {
+        String categoria2 = categoria.toLowerCase();
+        agregarPelicula(id, nombre, anio, categoria2);
+        System.out.println("[?] pelicula agregada con exito");
+
+        // si despues de terminado el ciclo no se encuentra categoria
+        // crear nueva categoria
+
+        int i = 0;
+        while (i < nombre_Categorias.length)
+        {
+            if (categoria2.equals(nombre_Categorias[i]))
+            {
+                incidencia_Categorias[i] = incidencia_Categorias[i] + 1;
+                i = nombre_Categorias.length + 1;
+            }
+            else
+            {
+                i = i + 1;
+            }
+        }
+        if (i != nombre_Categorias.length + 1)
+        {
+            nombre_Categorias = agregarElementoString(nombre_Categorias, categoria2);
             incidencia_Categorias = agregarElementoInt(incidencia_Categorias, 1);
         }
         // menu(); se elimino porque se ejecuta por cada pelicula ingresada
@@ -324,12 +331,10 @@ public class Practica2
     {
         System.out.println("[+] cantidad de peliculas por categoria");
         System.out.println("    orden: categoria, incidencia");
-        ///BORRAR
-        System.out.println("nombre_Categorias.length: " + nombre_Categorias.length);
         int i = 0;
         while (i < nombre_Categorias.length)
         {
-            System.out.println(nombre_Categorias[i] + ", " + incidencia_Categorias[i]);
+            System.out.println("    " + nombre_Categorias[i] + ", " + incidencia_Categorias[i]);
             i = i + 1;
         }
 
@@ -338,7 +343,7 @@ public class Practica2
         i = 0;
         while (i < nombre_Categorias.length)
         {
-            System.out.println(nombre_Categorias[i] + ": ");
+            System.out.print("    " + nombre_Categorias[i] + ": ");
             int j = 0;
             while (j < categoria_Peliculas.length)
             {
@@ -392,6 +397,7 @@ public class Practica2
         System.out.println("    " + id_Peliculas[menorI] + ", " + nombre_Peliculas[menorI] + ": " + incidencia_prestamo_Peliculas[menorI]);
         menu1();
     }
+
     static void ordenar()
     {
         System.out.println("nombre de peliculas en orden ascendente");
@@ -410,14 +416,14 @@ public class Practica2
             }
         }
         for (String nombre : nombresOrdenados) {
-            System.out.println(nombre + ", ");
+            System.out.println(nombre);
         }
         menu1();
     }
 
     static void menu1()
     {
-        System.out.println("MEMORABILIA");
+        System.out.println("M E M O R A B I L I A");
         System.out.println("[1] prestamo de peliculas");
         System.out.println("[2] devolucion de peliculas");
         System.out.println("[3] ingresar una pelicula");
@@ -459,32 +465,20 @@ public class Practica2
 
     public static void main(String[] args)
     {
+        // agregamos algunos clientes y peliculas
         Random random1 = new Random();
-        int i = 9;
-        while (i > 0)
+        int i = 9; // alternativa2: int i = 1;
+        while (i > 0) // alternativa2: while (i < 10)
         {
             int id = i * 100 + i * 10 + i;
             int num1 = random1.nextInt(5) + 1;
             int num2 = num1 * 100 + num1 * 10 + num1;
             int num3 = random1.nextInt(42) + 1980;
-            agregarCliente(id, "cliente" + id, id * 100); // BIEN
-            ingresarPeliculaAUTO(id, "pelicula" + id, num3, "categoria" + num2);
+            String categoria = "categoria" + num2;
+            agregarCliente(id, "cliente" + id, id * 100);
+            ingresarPeliculaAUTO(id, "pelicula" + id, num3, categoria);
             i = i - 1;
         }
-/*
-        int i = 1;
-        while (i < 10)
-        {
-            int id = i * 100 + i * 10 + i;
-            int num1 = random1.nextInt(5) + 1;
-            int num2 = num1 * 100 + num1 * 10 + num1;
-            int num3 = random1.nextInt(42) + 1980;
-            agregarCliente(id, "cliente" + id, id * 100); // BIEN
-            ingresarPeliculaAUTO(id, "pelicula" + id, num3, "categoria" + num2);
-            i = i + 1;
-        }
-
- */
         menu1();
     }
 }
